@@ -1,6 +1,10 @@
 using dotnetwebapi.configuration.configurations;
+using dotnetwebapi.configuration.extensions;
+using dotnetwebapi.configuration.validators;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 IConfiguration configuration = builder.Configuration;
@@ -10,7 +14,10 @@ IConfiguration configuration = builder.Configuration;
 builder.Services
     .AddOptions<RedisCacheConfiguration>()
     .Bind(configuration.GetRequiredSection(RedisCacheConfiguration.SECTION_NAME))
-    .ValidateDataAnnotations();
+    .ValidateFluentValidation()
+    .ValidateOnStart();
+
+builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly(), ServiceLifetime.Singleton);
 
 var app = builder.Build();
 
