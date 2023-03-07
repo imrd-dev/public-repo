@@ -5,11 +5,11 @@ namespace dotnetwebapi.configuration.validators;
 
 public class RedisCacheConfigurationValidator : AbstractValidator<RedisCacheConfiguration>
 {
-	public RedisCacheConfigurationValidator()
-	{
-		RuleFor(p => p.ConnectionString)
-			.NotEmpty()
-			.WithMessage("Redis cache connection string configuration value is required");
+    public RedisCacheConfigurationValidator()
+    {
+        RuleFor(p => p.ConnectionString)
+            .NotEmpty()
+            .WithMessage("Redis cache connection string configuration value is required");
 
         RuleFor(p => p.InstanceName)
             .NotEmpty()
